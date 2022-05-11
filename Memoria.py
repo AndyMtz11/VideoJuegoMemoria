@@ -10,12 +10,20 @@ Fecha:10/05/22...
 from random import *
 from turtle import *
 
-from freegames import path
+from freegames import path, vector
 
 car = path('car.gif')
 tiles = list(range(32)) * 2
 state = {'mark': None}
 hide = [True] * 64
+#Se crea vector contador para que se pueda usar dentro de 
+#funciones aunque no sea variable local
+counter = vector(0,0)
+#Creamos una bandera para ver si ya gano el jugador 
+#o no para solo imprimir una vez la frase ganadora y en una 
+#lista para poder usarlo dentro de la función
+hasWon = [False]
+
 
 
 def square(x, y):
@@ -52,6 +60,9 @@ def tap(x, y):
         hide[spot] = False
         hide[mark] = False
         state['mark'] = None
+    #Se agrega uno al contador cada que se haga un tap y se imprime.
+    counter.x += 1
+    print("Número de taps: " + str(counter.x))
 
 
 def draw():
@@ -66,6 +77,7 @@ def draw():
             x, y = xy(count)
             square(x, y)
 
+
     mark = state['mark']
 
     if mark is not None and hide[mark]:
@@ -74,9 +86,18 @@ def draw():
         goto(x + 2, y)
         color('black')
         write(tiles[mark], font=('Arial', 30, 'normal'))
+    
+    #Aqui checamos si toda la listade hide es False, lo cual significa que el 
+    #jugador gano e imprimimos solo una vez el mensaje marcando la bandera como 
+    #verdadero
+    if not any(hide):
+        if not hasWon[0]:
+            print("You did it in " + str(counter.x) + " taps, congratulations!!")
+            hasWon[0] = True
 
     update()
     ontimer(draw, 100)
+    
 
 
 shuffle(tiles)
