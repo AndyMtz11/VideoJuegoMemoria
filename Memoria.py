@@ -16,6 +16,18 @@ car = path('car.gif')
 tiles = list(range(32)) * 2
 state = {'mark': None}
 hide = [True] * 64
+'''Lista llamada colores para posteriormente 
+asiganrle un color a cada numero'''
+colores = ['#F0F8FF', '#4B0082', '#00FFFF', '#458B74', '#838B8B', '#E3CF57', '#0000EE', 
+'#8A2BE2', '#00008B', '#9C661F', '#A52A2A', '#EE3B3B', '#CDAA7D', '#8A3324', '#5F9EA0', 
+'#8EE5EE', '#FF6103', '#FF9912', '#66CD00', '#D2691E','#3D59AB', '#8B3E2F', 
+'#DC143C', '#FFB90F', '#006400', '#BCEE68', '#9932CC', '#68228B', '#B4EEB4',
+'#FF1493', '#EE2C2C', '#EEC900', '#EE6363', '#F0F8FF', '#4B0082', '#00FFFF', 
+'#458B74', '#838B8B', '#E3CF57', '#0000EE', 
+'#8A2BE2', '#00008B', '#9C661F', '#A52A2A', '#EE3B3B', '#CDAA7D', '#8A3324', '#5F9EA0', 
+'#8EE5EE', '#FF6103', '#FF9912', '#66CD00', '#D2691E','#3D59AB', '#8B3E2F', 
+'#DC143C', '#FFB90F', '#006400', '#BCEE68', '#9932CC', '#68228B', '#B4EEB4',
+'#FF1493', '#EE2C2C', '#EEC900', '#EE6363'] 
 #Se crea vector contador para que se pueda usar dentro de 
 #funciones aunque no sea variable local
 counter = vector(0,0)
@@ -83,9 +95,13 @@ def draw():
     if mark is not None and hide[mark]:
         x, y = xy(mark)
         up()
-        goto(x + 2, y)
-        color('black')
-        write(tiles[mark], font=('Arial', 30, 'normal'))
+        #Aqui pongo desde donde quiero que empiece la pluma
+        goto(x + 25, y)
+        '''Aqui le agrego un color al numero con la lista que cree anteriormente
+        llamada colores'''
+        color(colores[mark])
+        #El parametro align me sirve para centrar el texto
+        write(tiles[mark], font=('Arial', 30, 'normal'), align='center')
     
     #Aqui checamos si toda la listade hide es False, lo cual significa que el 
     #jugador gano e imprimimos solo una vez el mensaje marcando la bandera como 
